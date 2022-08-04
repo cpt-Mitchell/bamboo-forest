@@ -1,30 +1,60 @@
 <template>
   <div class="application-app-box">
     <van-row style="margin: 0 auto;">
-      <template v-for="(app,index) in $router.options.routes[0].children">
+      <template v-for="(app, index) in $router.options.routes[0].children">
         <van-col span="6" :key="index" v-if="!app.hidden">
           <div class="mu-paper" @click="goRoute(app.name)">
             <i :class="'app-icon app-' + app.meta.background + '-icon'"></i>
-            <span style="position: relative;top: .12rem;">{{app.name}}</span>
+            <span style="position: relative;top: .12rem;">{{ app.name }}</span>
           </div>
         </van-col>
       </template>
     </van-row>
-    <p class="version-text">当前版本号：{{$store.state.version}}</p>
+    <p class="version-text">当前版本号：{{ version }}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'application-apps',
+  data() {
+    return {
+      version: ''
+    }
+  },
   methods: {
     goRoute(name) {
       this.$router.push({
         name: name
       })
+    },
+    getVersion() {
+      window.ZLAPP.postMessage(
+        JSON.stringify({
+          method: 'getVersion',
+          getResult: 'window.App_Version'
+        })
+      )
+      let interval = setInterval(() => {
+        if (window.App_Version !== undefined && window.App_Version !== null) {
+          // 返回空字符串表示获取失败
+          if (window.App_Version.length === 0) {
+            clearInterval(interval)
+          } else {
+            try {
+              this.version = window.App_Version
+            } catch (e) {
+              dAlert('获取版本号失败')
+            }
+            clearInterval(interval)
+          }
+        }
+      }, 800)
     }
   },
-  mounted() { }
+  mounted() {
+    this.getVersion()
+  }
 }
 </script>
 

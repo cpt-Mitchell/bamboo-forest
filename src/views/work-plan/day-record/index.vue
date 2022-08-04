@@ -105,7 +105,7 @@ import request from '@/utils/httpUtil'
 import { API } from '@/api'
 import { parseTime } from '@/utils/index'
 import { ImagePreview } from 'vant'
-import { TakePhoto } from '@/plugins/cordovaplugin'
+import { TakePhoto } from '@/plugins/commonPlugins'
 export default {
   data() {
     return {

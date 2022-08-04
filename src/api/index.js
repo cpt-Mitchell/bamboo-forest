@@ -170,38 +170,38 @@ export const API = {
   /* end 工作任务 */
 
   /** start 工作计划 */
-  FOREST_PLAN_LC: 'forestry/exception/forestry/plan/lc', // 查询是否可发起巡山计划申请
-  FOREST_PLAN_PERSONS: 'forestry/exception/forestry/plan/planPersons', // 巡山计划巡视人
-  FOREST_PLAN_SAVE: 'forestry/exception/forestry/plan/save', // 保存巡山计划
-  FOREST_PLAN_AUDIT_LIST: 'forestry/exception/forestry/plan/audit/list', // 巡山计划待审列表
-  FOREST_PLAN_AUDIT_ONE: 'forestry/exception/forestry/plan/one', // 查询单个审批巡山计划
-  FOREST_PLAN_AUDIT: 'forestry/exception/forestry/plan/audit', // 审批巡山计划
-  FOREST_PLAN_AUDIT_PASS: 'forestry/exception/forestry/plan/pass/list', // 已审批的巡山计划
+  FOREST_PLAN_LC: 'forestry-exception/forestry/plan/lc', // 查询是否可发起巡山计划申请
+  FOREST_PLAN_PERSONS: 'forestry-exception/forestry/plan/planPersons', // 巡山计划巡视人
+  FOREST_PLAN_SAVE: 'forestry-exception/forestry/plan/save', // 保存巡山计划
+  FOREST_PLAN_AUDIT_LIST: 'forestry-exception/forestry/plan/audit/list', // 巡山计划待审列表
+  FOREST_PLAN_AUDIT_ONE: 'forestry-exception/forestry/plan/one', // 查询单个审批巡山计划
+  FOREST_PLAN_AUDIT: 'forestry-exception/forestry/plan/audit', // 审批巡山计划
+  FOREST_PLAN_AUDIT_PASS: 'forestry-exception/forestry/plan/pass/list', // 已审批的巡山计划
 
   /** end 工作计划 */
   /* 巡山异常反馈 */
-  DINGTALK_FORESTRY_EXCEPTION_SAVE: 'forestry/exception/forestry/log-patrolproblem/save', // 护林员反馈巡山异常情况
-  DINGTALK_FORESTRY_EXCEPTION_AUDITFIRST: 'forestry/exception/forestry/log-patrolproblem/updateFirst', // 片区主任一审
-  DINGTALK_FORESTRY_EXCEPTION_AUDITSECOND: 'forestry/exception/forestry/log-patrolproblem/updateSecond', // 林场主管二审
-  DINGTALK_FORESTRY_EXCEPTION_FINDEXCEPTION: 'forestry/exception/forestry/log-patrolproblem/findException', // 异常列表
-  DINGTALK_FORESTRY_EXCEPTION_FINDLB: 'forestry/exception/forestry/log-patrolproblem/findLbByEmployeeNo', // 林班列表
-  DINGTALK_FORESTRY_EXCEPTION_EXCEPTIONDETAIL: 'forestry/exception/forestry/log-patrolproblem/exceptionDetail', // 异常详情
+  DINGTALK_FORESTRY_EXCEPTION_SAVE: 'forestry-exception/forestry/log-patrolproblem/save', // 护林员反馈巡山异常情况
+  DINGTALK_FORESTRY_EXCEPTION_AUDITFIRST: 'forestry-exception/forestry/log-patrolproblem/updateFirst', // 片区主任一审
+  DINGTALK_FORESTRY_EXCEPTION_AUDITSECOND: 'forestry-exception/forestry/log-patrolproblem/updateSecond', // 林场主管二审
+  DINGTALK_FORESTRY_EXCEPTION_FINDEXCEPTION: 'forestry-exception/forestry/log-patrolproblem/findException', // 异常列表
+  DINGTALK_FORESTRY_EXCEPTION_FINDLB: 'forestry-exception/forestry/log-patrolproblem/findLbByEmployeeNo', // 林班列表
+  DINGTALK_FORESTRY_EXCEPTION_EXCEPTIONDETAIL: 'forestry-exception/forestry/log-patrolproblem/exceptionDetail', // 异常详情
   /* 天气预报 */
-  DINGTALK_WEATHERREPORT_SAVE: 'forestry/exception/weather/log-weatherreport/addOne', // 林班天气情况汇报
-  DINGTALK_WEATHERREPORT_FINDLBLIST: 'forestry/exception/weather/log-weatherreport/getLbByUserId', // 获取林管员对应林班列表
-  DINGTALK_WEATHERREPORT_FINDONE: 'forestry/exception/weather/log-weatherreport/findOne', // 根据ID查询一条
-  DINGTALK_WEATHERREPORT_FINDAllBYLCNAME: 'forestry/exception/org/check-personnel/findOne', // 根据ID查询一条
+  DINGTALK_WEATHERREPORT_SAVE: 'forestry-exception/weather/log-weatherreport/addOne', // 林班天气情况汇报
+  DINGTALK_WEATHERREPORT_FINDLBLIST: 'forestry-exception/weather/log-weatherreport/getLbByUserId', // 获取林管员对应林班列表
+  DINGTALK_WEATHERREPORT_FINDONE: 'forestry-exception/weather/log-weatherreport/findOne', // 根据ID查询一条
+  DINGTALK_WEATHERREPORT_FINDAllBYLCNAME: 'forestry-exception/org/check-personnel/findOne', // 根据ID查询一条
 
-  DINGTALK_DISASTERREPORT_GETDISSALB: 'forestry/exception/weather/log-disasterreport/getDisaLb', // 获取受灾林班
-  DINGTALK_DISASTERREPORT_SAVE: 'forestry/exception/weather/log-disasterreport/addOne', // 保存数据
-  DINGTALK_DISASTERREPORT_UPDATE: 'forestry/exception/weather/log-disasterreport/updateOne', // 保存数据
-  DINGTALK_DISASTERREPORT_UPDATECHECKSTATUS: 'forestry/exception/weather/log-disasterreport/updateCheckStatus', // 审核数据
-  DINGTALK_DISASTERREPORT_FINDEXCEPTION: 'forestry/exception/weather/log-disasterreport/findException', // 异常列表
-  DINGTALK_DISASTERREPORT_FINDCHECKEXCEPTION: 'forestry/exception/weather/log-disasterreport/findcheckException', // 异常列表
+  DINGTALK_DISASTERREPORT_GETDISSALB: 'forestry-exception/weather/log-disasterreport/getDisaLb', // 获取受灾林班
+  DINGTALK_DISASTERREPORT_SAVE: 'forestry-exception/weather/log-disasterreport/addOne', // 保存数据
+  DINGTALK_DISASTERREPORT_UPDATE: 'forestry-exception/weather/log-disasterreport/updateOne', // 保存数据
+  DINGTALK_DISASTERREPORT_UPDATECHECKSTATUS: 'forestry-exception/weather/log-disasterreport/updateCheckStatus', // 审核数据
+  DINGTALK_DISASTERREPORT_FINDEXCEPTION: 'forestry-exception/weather/log-disasterreport/findException', // 异常列表
+  DINGTALK_DISASTERREPORT_FINDCHECKEXCEPTION: 'forestry-exception/weather/log-disasterreport/findcheckException', // 异常列表
   DINGTALK_DISASTERREPORT_FINDCHECKEXCEPTIONAUDIT:
-    'forestry/exception/weather/log-disasterreport/findCheckExceptionAudit', // 异常列表
-  DINGTALK_DISASTERREPORT_FINDONE: 'forestry/exception/weather/log-disasterreport/findOne', // 根据ID查询一条
-  DINGTALK_DISASTERREPORT_GETQYNO: 'forestry/exception/forestry/bas-qy/getQy', // 获取林班区域
+    'forestry-exception/weather/log-disasterreport/findCheckExceptionAudit', // 异常列表
+  DINGTALK_DISASTERREPORT_FINDONE: 'forestry-exception/weather/log-disasterreport/findOne', // 根据ID查询一条
+  DINGTALK_DISASTERREPORT_GETQYNO: 'forestry-exception/forestry/bas-qy/getQy', // 获取林班区域
   DINGTALK_COMMON_QUERY_OR_SUBMIT: 'dingtalk/oa/common/transaction/submit',
 
   /* 病虫害 */

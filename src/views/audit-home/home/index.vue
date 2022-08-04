@@ -7,10 +7,10 @@
             <list-item :item="item" :path-name="routerPath(item)">
               <van-row slot="summary">
                 <van-col span="12">
-                  <span style="font-size: 0.34rem; color: #666">{{ item.node }}人：{{ item.disposer }}</span>
+                  <span style="font-size:.34rem;color:#666;">{{ item.node }}人：{{ item.disposer }}</span>
                 </van-col>
                 <van-col span="11" align="right">
-                  <span style="font-size: 0.34rem; color: #666">当前节点：{{ item.node }}</span>
+                  <span style="font-size:.34rem;color:#666;">当前节点：{{ item.node }}</span>
                 </van-col>
               </van-row>
             </list-item>
@@ -35,20 +35,18 @@
             <list-item :item="item" path-name="巡山计划审批">
               <van-row slot="summary">
                 <van-col span="12">
-                  <span style="font-size: 0.34rem; color: #666">申请人：{{ item.creater }}</span>
+                  <span style="font-size:.34rem;color:#666;">申请人：{{ item.creater }}</span>
                 </van-col>
                 <van-col span="11" align="right">
-                  <span style="font-size: 0.34rem; color: #666">当前节点：审批</span>
+                  <span style="font-size:.34rem;color:#666;">当前节点：审批</span>
                 </van-col>
               </van-row>
             </list-item>
           </div>
         </template>
         <div
-          v-if="
-            todoList.length === 0 && planTodoList.length === 0 && weedingList.length === 0 && !$store.state.isLoading
-          "
-          style="display: flex; justify-content: center; padding: 1rem 0; height: calc(100vh - 76px)"
+          v-if="todoList.length === 0 && planTodoList.length === 0 && weedingList.length === 0 && !$store.state.isLoading"
+          style="display:flex;justify-content:center;padding:1rem 0;height:calc(100vh - 76px);"
         >
           <span>暂无审核审批记录...</span>
         </div>
@@ -69,15 +67,14 @@ export default {
       weedingList: [],
       refreshing: false,
       loading: false,
-      loadedAll: true,
-      positionName: ''
+      loadedAll: true
     }
   },
   computed: {},
-  mounted: function () {
+  mounted: function() {
     this.refreshing = true
-    this.getPersonalInfo()
     this.$title(this.$route.name)
+    this.initApp()
   },
   components: {
     ListItem
@@ -87,13 +84,6 @@ export default {
       this.$router.push({
         name: '除草核价记录审核',
         query: item
-      })
-    },
-    getPersonalInfo() {
-      request.get(API.DINGTALK_PERSONAL_INFO + `/${this.$store.state.appUser.id}`).then(res => {
-        let data = res.data || {}
-        this.positionName = data.data.positionName || ''
-        this.initApp()
       })
     },
     routerPath({ tableName = '', node = '' }) {
@@ -134,7 +124,7 @@ export default {
           })
         }
       })
-      console.log(this.positionName)
+      this.$loadingState(true, '数据加载中')
       if (this.positionName === '劳务专员' || this.positionName === '劳务经理') {
         let params = {
           formid: '_',
@@ -154,7 +144,6 @@ export default {
           })
           .catch(err => this.$loadingState(false))
       }
-      this.$loadingState(true, '数据加载中')
       request
         .get(API.DINGTALK_FOREST_AUDITLIST, {})
         .then(res => {

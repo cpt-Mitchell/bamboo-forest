@@ -361,117 +361,6 @@ export default new Router({
           ]
         },
         {
-          path: '/checkquality',
-          name: '作业质量验收',
-          meta: {
-            background: 'check'
-          },
-          component: () => import('@/views/check-operation-quality/index'),
-          redirect: '/checkquality/apps',
-          children: [
-            {
-              path: 'apps',
-              name: '作业质量验收首页',
-              hidden: true,
-              meta: {
-                pRouteName: '竹林应用'
-              },
-              component: () =>
-                import(/* webpackChunkName: "check-operation-quality-apps" */ '@/views/check-operation-quality/apps')
-            },
-            {
-              path: 'apply',
-              name: '验收区域申请',
-              meta: {
-                pRouteName: '作业质量验收首页',
-                background: '#ff6500',
-                text: '区域申请'
-              },
-              component: () =>
-                import(/* webpackChunkName: "check-operation-quality-apply" */ '@/views/check-operation-quality/apply')
-            },
-            {
-              path: 'approve',
-              name: '验收区域列表',
-              meta: {
-                pRouteName: '作业质量验收首页',
-                background: '#ff6500',
-                text: '区域审核'
-              },
-              component: () =>
-                import(
-                  /* webpackChunkName: "check-operation-quality-approve" */ '@/views/check-operation-quality/approve'
-                )
-            },
-            {
-              path: 'approve/:id',
-              name: '验收区域审核',
-              hidden: true,
-              meta: {
-                pRouteName: '验收区域列表'
-              },
-              component: () =>
-                import(
-                  /* webpackChunkName: "check-operation-quality-approve/detail" */ '@/views/check-operation-quality/approve/detail'
-                )
-            },
-            {
-              path: 'write',
-              name: '验收数据录入',
-              meta: {
-                pRouteName: '作业质量验收首页',
-                background: '#ff6500',
-                text: '数据录入'
-              },
-              component: () =>
-                import(
-                  /* webpackChunkName: "check-operation-quality-data-write" */ '@/views/check-operation-quality/data-write'
-                )
-            },
-            {
-              path: 'write/:id',
-              name: '验收区域录入表单',
-              meta: {
-                pRouteName: '验收数据录入',
-                background: '#ff6500',
-                text: '验收区域录入'
-              },
-              hidden: true,
-              component: () =>
-                import(
-                  /* webpackChunkName: "check-operation-quality-data-write-detail" */ '@/views/check-operation-quality/data-write/detail'
-                )
-            },
-            {
-              path: 'confirm',
-              name: '验收记录确认',
-              meta: {
-                pRouteName: '作业质量验收首页',
-                background: '#6699ff',
-                text: '记录确认'
-              },
-              component: () =>
-                import(
-                  /* webpackChunkName: "check-operation-quality-record-confirm" */ '@/views/check-operation-quality/record-confirm'
-                )
-            },
-            {
-              path: 'confirm/:id',
-              name: '验收记录确认表单',
-              meta: {
-                pRouteName: '验收记录确认',
-                background: '#ff6500',
-                text: '验收记录确认'
-              },
-              hidden: true,
-              component: () =>
-                import(
-                  /* webpackChunkName: "check-operation-quality-data-write-detail" */ '@/views/check-operation-quality/record-confirm/detail'
-                )
-            }
-          ]
-        },
-        {
           path: '/jobreport',
           name: '作业进度汇报',
           meta: {
@@ -777,63 +666,6 @@ export default new Router({
           ]
         },
         {
-          path: '/moto',
-          name: '摩托车模块',
-          meta: {
-            pRouteName: '竹林应用',
-            background: 'moto'
-          },
-          component: () => import('@/views/moto/index'),
-          redirect: '/moto/apps',
-          children: [
-            {
-              path: 'apps',
-              name: '摩托车模块首页',
-              hidden: true,
-              meta: {
-                pRouteName: '竹林应用'
-              },
-              component: () => import(/* webpackChunkName: "moto-apps" */ '@/views/moto/apps')
-            },
-            {
-              path: 'work-mile',
-              name: '工作里程拍照',
-              meta: {
-                pRouteName: '摩托车模块'
-              },
-              component: () =>
-                import(/* webpackChunkName: "moto-work-mile-takePhoto" */ '@/views/moto/work-mile-takePhoto')
-            },
-            {
-              path: 'private-mile',
-              name: '私用里程拍照',
-              meta: {
-                pRouteName: '摩托车模块'
-              },
-              component: () =>
-                import(/* webpackChunkName: "moto-private-miles-takePhoto" */ '@/views/moto/private-miles-takePhoto')
-            },
-            {
-              path: 'travel',
-              name: '搭乘拍照',
-              meta: {
-                pRouteName: '摩托车模块'
-              },
-              component: () =>
-                import(/* webpackChunkName: "tmoto-ravel-and-takePhoto" */ '@/views/moto/travel-and-takePhoto')
-            },
-            {
-              path: 'odometer-damaged',
-              name: '里程表损坏拍照',
-              meta: {
-                pRouteName: '摩托车模块'
-              },
-              component: () =>
-                import(/* webpackChunkName: "moto-odometer-damaged" */ '@/views/moto/odometer-damaged-takePhoto')
-            }
-          ]
-        },
-        {
           path: '/approve',
           name: '审核审批',
           meta: {
@@ -947,15 +779,6 @@ export default new Router({
               component: () => import(/* webpackChunkName: "labourer-details" */ '@/views/labourer-info/details')
             }
           ]
-        },
-        {
-          path: '/interview-photo',
-          name: '民工面试拍照',
-          meta: {
-            pRouteName: '竹林应用',
-            background: 'interview'
-          },
-          component: () => import('@/views/interview-photo/index')
         },
         {
           path: '/location',
@@ -1108,6 +931,67 @@ export default new Router({
               },
               hidden: true,
               component: () => import(/* webpackChunkName: "weeding-review" */ '@/views/weeding/review')
+            }
+          ]
+        },
+        {
+          path: '/standard-fertilizer-consumption',
+          name: '标准用肥量',
+          meta: {
+            pRouteName: '竹林应用',
+            background: 'work-plan'
+          },
+          component: () => import('@/views/standard-fertilizer-consumption/index'),
+          redirect: '/standard-fertilizer-consumption/apps',
+          children: [
+            {
+              path: 'apps',
+              name: '标准用肥量首页',
+              hidden: true,
+              meta: {
+                pRouteName: '竹林应用'
+              },
+              component: () =>
+                import(
+                  /* webpackChunkName: "standard-fertilizer-consumption-apps" */ '@/views/standard-fertilizer-consumption/apps'
+                )
+            },
+            {
+              path: 'record-query',
+              name: '记录查询',
+              meta: {
+                pRouteName: '标准用肥量首页',
+                background: '#ff6500'
+              },
+              component: () =>
+                import(
+                  /* webpackChunkName: "standard-fertilizer-consumption-plan" */ '@/views/standard-fertilizer-consumption/record-query'
+                )
+            },
+
+            {
+              path: 'apply-record',
+              name: '记录申请表',
+              hidden: true,
+              meta: {
+                pRouteName: '记录查询'
+              },
+              component: () =>
+                import(
+                  /* webpackChunkName: "standard-fertilizer-consumption-plan" */ '@/views/standard-fertilizer-consumption/apply-record'
+                )
+            },
+            {
+              path: 'approve-query',
+              name: '审批结果',
+              meta: {
+                pRouteName: '标准用肥量首页',
+                background: '#ff6500'
+              },
+              component: () =>
+                import(
+                  /* webpackChunkName: "standard-fertilizer-consumption-day-record" */ '@/views/standard-fertilizer-consumption/approve-query'
+                )
             }
           ]
         },

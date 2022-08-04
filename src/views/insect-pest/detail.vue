@@ -193,7 +193,7 @@
       </div>
       <van-col span="24" style="margin-top: 5px">
         <van-button style="width: 100%" @click="showPictureAction = true" color="#f7d127">
-          <span style="color: #21bcfa">受灾情况拍照</span>
+          <span style="color: #fff">受灾情况拍照</span>
         </van-button>
       </van-col>
     </div>
@@ -222,7 +222,7 @@ import Footbar from '@/components/Footbar'
 import request from '@/utils/httpUtil'
 import { API } from '@/api'
 import { parseTime } from '@/utils/index'
-import { GetPhoto, TakePhoto } from '@/plugins/cordovaplugin'
+import { GetPhoto, TakePhoto } from '@/plugins/commonPlugins'
 import MSelector from '@/components/MultipleSelector'
 import { ImagePreview } from 'vant'
 export default {
@@ -625,7 +625,7 @@ export default {
     },
     doSubmit() {
       this.form.remake = '竹林APP发送'
-      this.form.companyName = '广西竹林公司'
+      this.form.companyName = this.userCompany
       this.form.companyId = '1'
       let date = new Date()
       this.form.status = '0'

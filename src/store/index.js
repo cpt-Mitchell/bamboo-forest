@@ -18,14 +18,10 @@ export default new Vuex.Store({
   state: {
     appUser: null,
     deviceUuid: '',
-    version: '',
     devAlertShow: false,
     isLoading: false,
     loadingText: '',
-    locateTimout: null,
-    launchForm: null,
-    launchData: null,
-    inputShow: false
+    locateTimout: null
   },
   actions: {
     doLogin({ commit }, payload) {
@@ -36,13 +32,6 @@ export default new Vuex.Store({
     loadingState(state, { isLoading, loadingText }) {
       state.isLoading = isLoading
       state.loadingText = loadingText
-    },
-    updateVersion(state, versionObj) {
-      if (versionObj.version) {
-        state.version = versionObj.currVersion
-      }
-      state.locateTimout = versionObj.locateTimeout || null
-      state.devAlertShow = !!versionObj.devAlert
     },
     updateDeviceUuid(state, uuid) {
       if (!uuid) return false
@@ -73,15 +62,6 @@ export default new Vuex.Store({
           window.localStorage.removeItem('appLoginUser')
         }
       }
-    },
-    SAVE_WEEDING_LAUNCH_DATA: (state, list) => {
-      state.launchData = list || null
-    },
-    SAVE_WEEDING_LAUNCH_FORM: (state, object) => {
-      state.launchForm = object || null
-    },
-    INPUT_SHOW: (state, data) => {
-      state.inputShow = data
     }
   }
 })

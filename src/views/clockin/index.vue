@@ -54,9 +54,9 @@
     </div>
     <footbar>
       <van-row>
-        <!-- <mu-col>
+        <!-- <van-col>
                 <mu-button full-width color="success" :disabled="isLoading" style="height: 40px" @click="!isLoading?submit(false):null">保存</mu-button>
-        </mu-col>-->
+        </van-col>-->
         <van-col span="24">
           <van-button @click="doSubmit()" style="width:100%;height:40px;" type="primary">提交</van-button>
         </van-col>

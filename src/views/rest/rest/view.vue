@@ -2,9 +2,9 @@
   <div>
     <div class="card card-part">
       <van-cell-group>
-        <van-field class="no-disabled_bgcolor" v-model="form.canrestDays" label="可休班天数" disabled/>
-        <van-field class="no-disabled_bgcolor" v-model="form.beginDate" label="休班开始时间" disabled/>
-        <van-field class="no-disabled_bgcolor" v-model="form.endDate" label="休班结束时间" disabled/>
+        <van-field class="no-disabled_bgcolor" v-model="form.canrestDays" label="可休班天数" disabled />
+        <van-field class="no-disabled_bgcolor" v-model="form.beginDate" label="休班开始时间" disabled />
+        <van-field class="no-disabled_bgcolor" v-model="form.endDate" label="休班结束时间" disabled />
         <van-field
           class="no-disabled_bgcolor"
           style="color:#333"
@@ -19,11 +19,11 @@
       </van-cell-group>
     </div>
     <div class="sub-head">
-      <mu-row>
-        <mu-col>
+      <van-row>
+        <van-col>
           <span>审核审批历史</span>
-        </mu-col>
-      </mu-row>
+        </van-col>
+      </van-row>
     </div>
     <div class="card card-part">
       <apv-history :list="history"></apv-history>
@@ -54,14 +54,12 @@ export default {
   },
   methods: {
     getCanRestDays() {
-      request
-        .post(API.DINGTALK_DUTY_CANRESTDAYS)
-        .then(resp => {
-          let errCode = resp.data.errorCode
-          if (errCode) {
-            this.form.canrestDays = resp.data.data + '天'
-          }
-        })
+      request.post(API.DINGTALK_DUTY_CANRESTDAYS).then(resp => {
+        let errCode = resp.data.errorCode
+        if (errCode) {
+          this.form.canrestDays = resp.data.data + '天'
+        }
+      })
     },
     details() {
       this.$loadingState(true, '数据加载中')
@@ -83,7 +81,7 @@ export default {
             dAlert(resp.data.msg)
           }
         })
-        .catch(errr => (this.$loadingState(false)))
+        .catch(errr => this.$loadingState(false))
     }
   },
   components: {

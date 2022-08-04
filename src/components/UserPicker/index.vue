@@ -5,12 +5,10 @@
         v-if="pickerDisplay"
         :currentCompany="currentCompany"
         :searchBelongCompany="searchBelongCompany"
-        :searchAppointCompany="searchAppointCompany"
         :justWorker="justWorker"
         :selected="selected"
-        :title="title"
         :multiple="multiple"
-        @close="pickerShow = false"
+        @close="pickerShow=false"
         @submit="getResult"
       ></picker>
     </div>
@@ -27,27 +25,13 @@ export default {
         return ''
       }
     },
-    title: {
-      type: String,
-      default: function () {
-        return ''
-      }
-    },
     multiple: {
       type: Boolean,
       default: function () {
         return false
       }
     },
-    // 只查询本公司
     searchBelongCompany: {
-      type: Boolean,
-      default: function () {
-        return false
-      }
-    },
-    // searchBelongCompany=false的情况下，指定查询某公司
-    searchAppointCompany: {
       type: Boolean,
       default: function () {
         return false

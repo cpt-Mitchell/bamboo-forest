@@ -1,6 +1,6 @@
 <template>
   <div class="labourer-login">
-    <div class="card card-part">
+    <div class="card-part">
       <van-cell-group>
         <van-field
           label-align="right"
@@ -47,14 +47,14 @@
 <script>
 import request from '@/utils/httpUtil'
 import { API } from '@/api'
-import { TakePhoto } from '@/plugins/cordovaplugin'
+import { GetPhoto } from '@/plugins/commonPlugins'
 export default {
   data() {
     return {
       form: {
-        name: '廖老加',
-        idNo: '452228197106023513',
-        year: '2020/2021'
+        name: '',
+        idNo: '',
+        year: ''
       },
       yearOptions: []
     }
@@ -82,7 +82,7 @@ export default {
       return true
     },
     TakePhoto() {
-      TakePhoto(
+      GetPhoto(
         file => {
           this._onChange(file)
         },
@@ -178,14 +178,14 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .labourer-login {
   .van-field__label--right {
     padding-right: 0;
   }
   .van-field .van-cell__title {
-    width: 96px;
-    max-width: 115px;
+    // width: 96px;
+    max-width: 100px;
   }
   [class*='van-hairline']::after {
     border: none;

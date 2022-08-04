@@ -1,7 +1,6 @@
 <template>
   <div class="login-wrap">
     <p class="login-title">
-      <!-- <span>华劲竹林</span> -->
       <img :src="require('./logo.png')" />
     </p>
     <van-cell-group style="padding:0 1rem;">

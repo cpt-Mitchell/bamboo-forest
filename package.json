@@ -1,12 +1,11 @@
 {
-  "name": "oa-approval",
-  "version": "0.1.0",
+  "name": "bamboo-forest",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "yarn lint --fix && vue-cli-service build && yarn hotInit && yarn replace",
-    "hotInit": "cordova-hcp build dist",
-    "replace": "rm -rf ~/Documents/hwagain-project/bamboo-forest/www/** && cp -rf ./dist/ ~/Documents/hwagain-project/bamboo-forest/www/",
+    "build": "vue-cli-service build && yarn replace",
+    "replace": "rm -rf ~/Documents/flutter-space/zl_app_flutter/assets/www** && cp -rf ./dist/ ~/Documents/flutter-space/zl_app_flutter/assets/www/",
     "lint": "vue-cli-service lint"
   },
   "repository": {

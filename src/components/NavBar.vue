@@ -2,16 +2,19 @@
   <div class="nav-bar-wrap">
     <!-- :class="{'hide-back':['/','/apps'].indexOf($route.path) !== -1}" -->
     <van-nav-bar
-      :title="$route.name"
-      :left-text="['/','/apps'].indexOf($route.path) !== -1 ? (($store.state.appUser?$store.state.appUser.userName:'')+'，您好！'):'返回'"
-      :left-arrow="!(['/','/apps'].indexOf($route.path) !== -1)"
+      :title="$route.name === '竹林应用' ? '' : $route.name"
+      :left-text="
+        ['/', '/apps'].indexOf($route.path) !== -1
+          ? ($store.state.appUser ? $store.state.appUser.userName : '') + '，您好！'
+          : '返回'
+      "
+      :left-arrow="!(['/', '/apps'].indexOf($route.path) !== -1)"
       @click-left="onClickLeft"
       @click-right="onClickRight"
     >
-      <a
-        style="color:#0099ff"
-        slot="right"
-      >{{['/','/apps'].indexOf($route.path) === -1 ? '返回首页' : rightText}}</a>
+      <a style="color:#0099ff" slot="right">{{
+        ['/', '/apps'].indexOf($route.path) === -1 ? '返回首页' : rightText
+      }}</a>
     </van-nav-bar>
   </div>
 </template>
@@ -41,7 +44,6 @@ export default {
       if (['/', '/apps'].indexOf(this.$route.path) !== -1) {
         return false
       }
-      console.log(this.$route.path, this.$route.meta.pRouteName)
       if (!this.back) {
         if (this.$route.meta.pRouteName) {
           this.$router.push({ name: this.$route.meta.pRouteName })
@@ -49,7 +51,7 @@ export default {
           this.$router.back()
         }
       } else {
-        this.$router.back()
+        this.back()
       }
     },
     onClickRight() {
@@ -60,7 +62,11 @@ export default {
       }
     }
   },
-  mounted() { }
+  mounted() {
+    window.AppBack = () => {
+      this.onClickLeft()
+    }
+  }
 }
 </script>
 

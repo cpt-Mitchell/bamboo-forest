@@ -45,132 +45,53 @@ export const initPlugins = _vue => {
   _vue.prototype.$dAlert = window.dAlert
   _vue.prototype.$dConfirm = window.dConfirm
   const catkicLocation = (elId, successCb, errorCb) => {
-    // let secods = 0,
-    //   intervalFunc = null
-    // if (store.state.devAlertShow) {
-    //   intervalFunc = setInterval(() => {
-    //     secods += 1
-    //   }, 1000)
-    // }
-    catkic.getLocation(
-      200, // 精确度(m)
-      result => {
-        // alert('定位时长' + secods + '秒 \n' + JSON.stringify(result))
-        let ggPoint = new BMap.Point(result.longitude, result.latitude)
-        var convertor = new BMap.Convertor()
-        // 坐标转换
-        convertor.translate([ggPoint], 1, 5, data => {
-          if (data.status === 0) {
-            let point = data.points[0]
-            if (elId) {
-              let map = new BMap.Map(elId)
-              map.centerAndZoom(point, 15)
-              map.setCenter(point)
-              let mk = new BMap.Marker(point)
-              map.addOverlay(mk)
-            }
-            // 查询中文地址
-            let geoc = new BMap.Geocoder()
-            geoc.getLocation(point, function(rs) {
-              // dAlert('定位+经纬度转换+地址转换获取时长为' + secods + '秒')
-              // clearInterval(intervalFunc)
-              let addComp = rs.addressComponents
-              successCb &&
-                successCb({
-                  result: Object.assign({}, result, point),
-                  position: {
-                    lat: (point.lat || 0).toFixed(6),
-                    lng: (point.lng || 0).toFixed(6)
-                  },
-                  formattedAddress:
-                    addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber
-                })
-            })
-          }
-        })
-      },
-      error => {
-        // clearInterval(intervalFunc)
-        errorCb && errorCb(error)
-      }
+    window.ZLAPP.postMessage(
+      JSON.stringify({
+        method: 'getAppLocation',
+        accuracy: window.serveAccuracy || 100, // 精度
+        getResult: 'window.AppLocationInfo'
+      })
     )
+    let i = 0
+    let interval = setInterval(() => {
+      i++
+      if (i > 30) {
+        clearInterval(interval)
+        errorCb && errorCb('定位超时，请重试')
+      }
+      if (window.AppLocationInfo) {
+        try {
+          window.AppLocationInfo = window.AppLocationInfo.replace(/\'/g, '"')
+          let result = JSON.parse(window.AppLocationInfo)
+          let point = new BMap.Point(result.longitude, result.latitude)
+          if (elId) {
+            let map = new BMap.Map(elId)
+            map.centerAndZoom(point, 15)
+            map.setCenter(point)
+            let mk = new BMap.Marker(point)
+            map.addOverlay(mk)
+          }
+          successCb &&
+            successCb({
+              result: Object.assign({}, result, point),
+              position: {
+                lat: (result.latitude || 0).toFixed(6),
+                lng: (result.longitude || 0).toFixed(6)
+              },
+              formattedAddress: result.address
+            })
+          clearInterval(interval)
+          window.AppLocationInfo = ''
+          i = 0
+        } catch (e) {
+          clearInterval(interval)
+          window.AppLocationInfo = ''
+          errorCb && errorCb('定位失败，请重试')
+        }
+      }
+    }, 1000)
   }
   _vue.prototype.$catkicLocation = catkicLocation
-  // const baiduMap = (elId, successCb, errorCb, noConfirm = true) => {
-  //   // let secods = 0,
-  //   //   intervalFunc = null
-  //   // if (store.state.devAlertShow) {
-  //   //   intervalFunc = setInterval(() => {
-  //   //     secods += 1
-  //   //   }, 1000)
-  //   // }
-  //   navigator.baidulocation.getLocation(
-  //     function(result) {
-  //       if (result.locType !== 61) {
-  //         baiduMap(elId, successCb, errorCb)
-  //         // clearInterval(intervalFunc)
-  //         return false
-  //       }
-  //       // if (store.state.devAlertShow) {
-  //       //   alert('定位时长' + secods + '秒 \n' + JSON.stringify(result))
-  //       alert(JSON.stringify(result))
-  //       // }
-  //       let point = new BMap.Point(result.longitude, result.latitude)
-  //       if (elId) {
-  //         let map = new BMap.Map(elId)
-  //         map.centerAndZoom(point, 15)
-  //         let mk = new BMap.Marker(point)
-  //         map.addOverlay(mk)
-  //         map.panTo(point)
-  //       }
-  //       if (!result.addr) {
-  //         let geoc = new BMap.Geocoder()
-  //         geoc.getLocation(point, function(rs) {
-  //           // if (store.state.devAlertShow) {
-  //           //   dAlert('定位+地址获取时长为' + secods + '秒')
-  //           // }
-  //           // clearInterval(intervalFunc)
-  //           let addComp = rs.addressComponents
-  //           successCb &&
-  //             successCb({
-  //               position: {
-  //                 lat: (result.latitude || 0).toFixed(6),
-  //                 lng: (result.longitude || 0).toFixed(6)
-  //               },
-  //               formattedAddress:
-  //                 addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber
-  //             })
-  //         })
-  //       } else {
-  //         successCb &&
-  //           successCb({
-  //             position: {
-  //               lat: (result.latitude || 0).toFixed(6),
-  //               lng: (result.longitude || 0).toFixed(6)
-  //             },
-  //             formattedAddress: result.addr
-  //           })
-  //       }
-  //     },
-  //     function(error) {
-  //       if (noConfirm) {
-  //         if (error.message === 'Position retrieval timed out.') {
-  //           dConfirm('定位超时，是否重新定位', () => {
-  //             store.commit('loadingState', { isLoading: true, loadingText: '正在定位' })
-  //             baiduMap(elId, successCb, errorCb)
-  //           })
-  //         } else {
-  //           dAlert(error.describe ? error.describe : '定位失败,请检查定位权限是否打开')
-  //         }
-  //       }
-  //       errorCb && errorCb(error)
-  //       // 定位失败回调方法
-  //       // error - 定位失败错误对象
-  //     },
-  //     { timeout: store.state.locateTimout || 40000 }
-  //   )
-  // }
-  // _vue.prototype.$baiduMap = baiduMap
 
   _vue.component('VueElementLoading', VueElementLoading)
   _vue.prototype.$loadingState = (state, msg) => {
@@ -179,4 +100,38 @@ export const initPlugins = _vue => {
       loadingText: msg
     })
   }
+}
+
+export const TakePhoto = function(cb1, cb2) {
+  cameraPlugin(1, cb1, cb2)
+}
+
+export const GetPhoto = function(cb1, cb2) {
+  cameraPlugin(2, cb1, cb2)
+}
+
+const cameraPlugin = (type, cb1, cb2) => {
+  window.ZLAPP.postMessage(
+    JSON.stringify({
+      method: 'getCamera',
+      type: type, // 1为拍照 2为相册
+      getResult: 'window.AppCameraImageBase64'
+    })
+  )
+  let interval = setInterval(() => {
+    if (window.AppCameraImageBase64 !== undefined && window.AppCameraImageBase64 !== null) {
+      // 返回空字符串表示取消了拍照或者选择
+      if (window.AppCameraImageBase64.length === 0) {
+        clearInterval(interval)
+      } else {
+        try {
+          cb1 && cb1({ base64: window.AppCameraImageBase64, name: new Date().getTime() + '' })
+          window.AppCameraImageBase64 = null // 清空结果 防止下次取到同样的图片
+        } catch (e) {
+          cb2 && cb2()
+        }
+        clearInterval(interval)
+      }
+    }
+  }, 800)
 }

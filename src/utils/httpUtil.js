@@ -6,8 +6,8 @@ import router from '@/router'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
 const fetch = axios.create({
-  // baseURL: 'https://wxmp.hwagain.com/api/' || process.env.VUE_APP_BASE_API || '',
-  baseURL: /* '/apitest' || */ process.env.VUE_APP_BASE_API || '',
+  baseURL: 'https://wxmp.hwagain.com/api/' || process.env.VUE_APP_BASE_API || '',
+  // baseURL: process.env.VUE_APP_BASE_API || '',
   timeOut: 5000
   // onUploadProgress: p=> {
   //     console.log(p)

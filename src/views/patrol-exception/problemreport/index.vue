@@ -105,7 +105,7 @@ import Footbar from '@/components/Footbar'
 import request from '@/utils/httpUtil'
 import { API } from '@/api'
 import { parseTime } from '@/utils/index'
-import { GetPhoto, TakePhoto } from '@/plugins/cordovaplugin'
+import { GetPhoto, TakePhoto } from '@/plugins/commonPlugins'
 import { ImagePreview } from 'vant'
 
 export default {
@@ -268,7 +268,8 @@ export default {
             }, 3000)
           })
         } else {
-          this.$dAlert('上传失败')
+          console.log(res)
+          this.$dAlert('上传失败' + JSON.stringify(res))
         }
       })
     },

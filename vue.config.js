@@ -31,10 +31,20 @@ module.exports = {
     hotOnly: true,
     progress: true
     // proxy: {
-    //   '/apitest': {
-    //     target: 'https://wxmp.hwagain.com/apitest/',
+    //   '/dingtalk': {
+    //     target: 'http://ding.hwagain.catkic.cn:9001/api/dingtalk',
     //     changeOrigin: true,
-    //     pathRewrite: { '^/apitest': '' }
+    //     pathRewrite: { '^/dingtalk': '' }
+    //   },
+    //   '/forestry': {
+    //     target: 'http://ding.hwagain.catkic.cn:9001/api/forestry',
+    //     changeOrigin: true,
+    //     pathRewrite: { '^/forestry': '' }
+    //   },
+    //   '/auth': {
+    //     target: 'http://ding.hwagain.catkic.cn:9001/api/auth',
+    //     changeOrigin: true,
+    //     pathRewrite: { '^/auth': '' }
     //   }
     // }
   },

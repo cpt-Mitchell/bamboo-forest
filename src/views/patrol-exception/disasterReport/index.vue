@@ -77,7 +77,7 @@ import request from '@/utils/httpUtil'
 import { API } from '@/api'
 import { ImagePreview } from 'vant'
 import { parseTime } from '@/utils/index'
-import { GetPhoto, TakePhoto } from '@/plugins/cordovaplugin'
+import { GetPhoto, TakePhoto } from '@/plugins/commonPlugins'
 
 export default {
   name: 'exceptionaudit',

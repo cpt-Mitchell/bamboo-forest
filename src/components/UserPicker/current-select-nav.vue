@@ -1,6 +1,6 @@
 <template>
   <div class="current-select-nav">
-    <span v-if="!searchBelongCompany && !searchAppointCompany">
+    <span v-if="!searchBelongCompany">
       <span
         :class="[data.length>0 ? 'jump-depart' : '']"
         @click="data.length>0?navLinkHandle(-1):null"
@@ -22,12 +22,6 @@
 export default {
   props: {
     searchBelongCompany: {
-      type: Boolean,
-      default: function () {
-        return false
-      }
-    },
-    searchAppointCompany: {
       type: Boolean,
       default: function () {
         return false

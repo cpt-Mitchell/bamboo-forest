@@ -220,7 +220,7 @@ import Footbar from '@/components/Footbar'
 import request from '@/utils/httpUtil'
 import { API } from '@/api'
 import { parseTime } from '@/utils/index'
-import { GetPhoto, TakePhoto } from '@/plugins/cordovaplugin'
+import { GetPhoto, TakePhoto } from '@/plugins/commonPlugins'
 import { ImagePreview } from 'vant'
 import MSelector from '@/components/MultipleSelector'
 export default {
