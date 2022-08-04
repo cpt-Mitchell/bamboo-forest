@@ -7,10 +7,24 @@
             <list-item :item="item" :path-name="routerPath(item)">
               <van-row slot="summary">
                 <van-col span="12">
-                  <span style="font-size:.34rem;color:#666;">{{ item.node }}人：{{ item.disposer }}</span>
+                  <span style="font-size: 0.34rem; color: #666">{{ item.node }}人：{{ item.disposer }}</span>
                 </van-col>
                 <van-col span="11" align="right">
-                  <span style="font-size:.34rem;color:#666;">当前节点：{{ item.node }}</span>
+                  <span style="font-size: 0.34rem; color: #666">当前节点：{{ item.node }}</span>
+                </van-col>
+              </van-row>
+            </list-item>
+          </div>
+        </template>
+        <template v-for="(item, index) in weedingList">
+          <div :key="index" @click="goReview(item)">
+            <list-item :item="item">
+              <van-row slot="summary">
+                <van-col span="12">
+                  <span style="font-size: 0.34rem; color: #666">录入人：{{ item['录入人'] }}</span>
+                </van-col>
+                <van-col span="11" align="right">
+                  <span style="font-size: 0.34rem; color: #666">作业方式：{{ item['作业方式'] }}</span>
                 </van-col>
               </van-row>
             </list-item>
@@ -21,18 +35,20 @@
             <list-item :item="item" path-name="巡山计划审批">
               <van-row slot="summary">
                 <van-col span="12">
-                  <span style="font-size:.34rem;color:#666;">申请人：{{ item.creater }}</span>
+                  <span style="font-size: 0.34rem; color: #666">申请人：{{ item.creater }}</span>
                 </van-col>
                 <van-col span="11" align="right">
-                  <span style="font-size:.34rem;color:#666;">当前节点：审批</span>
+                  <span style="font-size: 0.34rem; color: #666">当前节点：审批</span>
                 </van-col>
               </van-row>
             </list-item>
           </div>
         </template>
         <div
-          v-if="todoList.length === 0 && planTodoList.length === 0 && !$store.state.isLoading"
-          style="display:flex;justify-content:center;padding:1rem 0;height:calc(100vh - 76px);"
+          v-if="
+            todoList.length === 0 && planTodoList.length === 0 && weedingList.length === 0 && !$store.state.isLoading
+          "
+          style="display: flex; justify-content: center; padding: 1rem 0; height: calc(100vh - 76px)"
         >
           <span>暂无审核审批记录...</span>
         </div>
@@ -50,21 +66,36 @@ export default {
     return {
       todoList: [],
       planTodoList: [],
+      weedingList: [],
       refreshing: false,
       loading: false,
-      loadedAll: true
+      loadedAll: true,
+      positionName: ''
     }
   },
   computed: {},
-  mounted: function() {
+  mounted: function () {
     this.refreshing = true
+    this.getPersonalInfo()
     this.$title(this.$route.name)
-    this.initApp()
   },
   components: {
     ListItem
   },
   methods: {
+    goReview(item) {
+      this.$router.push({
+        name: '除草核价记录审核',
+        query: item
+      })
+    },
+    getPersonalInfo() {
+      request.get(API.DINGTALK_PERSONAL_INFO + `/${this.$store.state.appUser.id}`).then(res => {
+        let data = res.data || {}
+        this.positionName = data.data.positionName || ''
+        this.initApp()
+      })
+    },
     routerPath({ tableName = '', node = '' }) {
       let type = tableName
       if (
@@ -103,6 +134,26 @@ export default {
           })
         }
       })
+      console.log(this.positionName)
+      if (this.positionName === '劳务专员' || this.positionName === '劳务经理') {
+        let params = {
+          formid: '_',
+          apvResult: '同意',
+          module: '劳务审核查询列表',
+          task: '劳务审核查询列表',
+          payload: {}
+        }
+        request
+          .post(API.DISEASES_INFO, params)
+          .then(res => {
+            if (res.data.errorCode === 0) {
+              this.weedingList = res.data.data.data || []
+            } else {
+              this.$toast(res.data.msg || '获取除草核价审批列表失败')
+            }
+          })
+          .catch(err => this.$loadingState(false))
+      }
       this.$loadingState(true, '数据加载中')
       request
         .get(API.DINGTALK_FOREST_AUDITLIST, {})

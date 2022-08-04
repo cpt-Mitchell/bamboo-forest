@@ -33,6 +33,7 @@
               </div>
             </div>
           </div>
+          <van-field v-model="form.remark" label="原因" type="textarea" rows="1" autosize placeholder="请输入原因" />
         </div>
       </van-cell-group>
       <map-view :show-address="true" @result="getGeolocationResult"></map-view>
@@ -53,7 +54,11 @@ import { API } from '@/api'
 export default {
   data() {
     return {
-      position: {},
+      position: {
+        latitude: '',
+        longitude: '',
+        address: ''
+      },
       form: {
         PatrolPoiID: '',
         Reason: ''
@@ -77,16 +82,16 @@ export default {
         return false
       }
       this.$dConfirm('确定提交所填信息吗?', () => {
-        this.$loadingState(true, '数据提交中')
         let date = new Date()
         let params = {
           formid: '_',
           apvResult: '同意',
           module: '竹林巡山异常报到',
-          task: '巡山异常审核提交',
+          task: '巡山异常提交',
           payload: {
             PatrolPoiID: this.form.PatrolPoiID,
             Reason: this.form.Reason,
+            remark: this.form.remark,
             Location: `gis://${this.position.latitude};${this.position.longitude};3;${date.getFullYear() +
               '-' +
               (date.getMonth() + 1) +

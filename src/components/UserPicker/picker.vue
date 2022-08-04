@@ -9,12 +9,12 @@
       :text="loadingText"
     />
     <van-row class="picker-header">
-      <van-col span="12" align="left">公司员工选择</van-col>
+      <van-col span="12" align="left">{{title ? title : '公司员工选择'}}</van-col>
       <van-col span="12" align="right">
-        <van-button style="min-width:30px;margin-right:10px;" type="default" size="small" @click="$emit('close')"
+        <van-button style="min-width: 30px; margin-right: 10px" type="default" size="small" @click="$emit('close')"
           >关闭</van-button
         >
-        <van-button style="min-width:30px;" type="primary" size="small" @click="selectBackHandle">返回上级</van-button>
+        <van-button style="min-width: 30px" type="primary" size="small" @click="selectBackHandle">返回上级</van-button>
       </van-col>
     </van-row>
     <van-row class="picker-header">
@@ -22,6 +22,7 @@
       <van-col span="20">
         <current-select-nav
           :searchBelongCompany="searchBelongCompany"
+          :searchAppointCompany="searchAppointCompany"
           :data="navList"
           @navClick="navToShow"
         ></current-select-nav>
@@ -43,7 +44,7 @@
           </div>-->
         </van-col>
         <van-col
-          style="padding-left:15px;"
+          style="padding-left: 15px"
           span="22"
           class="item-name"
           :class="[
@@ -60,7 +61,7 @@
         :key="'d_' + index"
       >
         <van-col
-          style="padding-left:15px;"
+          style="padding-left: 15px"
           span="20"
           class="item-name"
           :class="[index + 1 != showList.deptList.length ? 'picker-item-bottom' : '']"
@@ -77,11 +78,12 @@
     </div>
     <van-row class="picker-footer">
       <van-col span="16">
-        <span style="display:block;width:100%;overflow:auto;white-space:nowrap;-webkit-overflow-scrolling: touch;"
+        <span
+          style="display: block; width: 100%; overflow: auto; white-space: nowrap; -webkit-overflow-scrolling: touch"
           >已选择{{ selectedUsers.length }}个</span
         >
       </van-col>
-      <van-col span="8" style="text-align:right;">
+      <van-col span="8" style="text-align: right">
         <van-button type="primary" size="small" @click="submit">确定</van-button>
       </van-col>
     </van-row>
@@ -96,19 +98,31 @@ export default {
   props: {
     currentCompany: {
       type: String,
-      default: function() {
+      default: function () {
+        return ''
+      }
+    },
+    title: {
+      type: String,
+      default: function () {
         return ''
       }
     },
     multiple: {
       type: Boolean,
-      default: function() {
+      default: function () {
         return false
       }
     },
     searchBelongCompany: {
       type: Boolean,
-      default: function() {
+      default: function () {
+        return false
+      }
+    },
+    searchAppointCompany: {
+      type: Boolean,
+      default: function () {
         return false
       }
     },
@@ -119,7 +133,7 @@ export default {
     // 只查询岗位工
     justWorker: {
       type: Boolean,
-      default: function() {
+      default: function () {
         return false
       }
     }
@@ -196,7 +210,7 @@ export default {
     },
     // 点导航部门跳转显示
     navToShow(index) {
-      if (this.searchBelongCompany) {
+      if (this.searchBelongCompany || this.searchAppointCompany) {
         if (index === 0) {
           this.listArr.splice(1, this.listArr.length - 1)
           this.navList = [
@@ -233,10 +247,19 @@ export default {
           api = `${API.DINGTALK_DEPARTMENT_EMPLOYEE}default`
         }
       } else {
-        // 非查本公司人员时
-        api = `${this.justWorker ? API.DINGTALK_DEPARTMENT_WORKER : API.DINGTALK_DEPARTMENT_EMPLOYEE}${item.fdId}/${
-          item.deptId
-        }`
+        // 查询指定公司
+        if (this.searchAppointCompany) {
+          if (item.fdId) {
+            api = `${API.DINGTALK_DEPARTMENT_EMPLOYEE}default/${item.fdId}/${item.deptId}`
+          } else {
+            api = `${API.DINGTALK_DEPARTMENT_EMPLOYEE}default`
+          }
+        } else {
+          // 非查本公司人员时
+          api = `${this.justWorker ? API.DINGTALK_DEPARTMENT_WORKER : API.DINGTALK_DEPARTMENT_EMPLOYEE}${item.fdId}/${
+            item.deptId
+          }`
+        }
       }
       request
         .get(api)
@@ -268,6 +291,21 @@ export default {
           if (errCode) {
             let data = res.data.data || []
             this.listArr.push(data)
+            if (this.searchAppointCompany) {
+              let fdId = ''
+              let deptId = ''
+              this.listArr[0].deptList.forEach(item => {
+                if (this.currentCompany === item.descShort) {
+                  fdId = item.fdId
+                  deptId = item.deptId
+                }
+              })
+              this.showNextDept({
+                descShort: this.currentCompany,
+                fdId: fdId,
+                deptId: deptId
+              })
+            }
             this.isLoading = false
           } else {
             dAlert(res.data.msg || '查询错误！')
@@ -280,9 +318,9 @@ export default {
     this.listArr = []
     this.searchBelongCompany
       ? this.showNextDept({
-        descShort: this.currentCompany,
-        fdId: 0
-      })
+          descShort: this.currentCompany,
+          fdId: 0
+        })
       : this.getList()
     this.selectedUserIds = (this.selected || []).map(item => item.id)
     this.selectedUsers = this.selected || []

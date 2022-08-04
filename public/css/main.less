@@ -4,9 +4,11 @@ body {
   font-size: 14px;
   user-select: none;
 }
-
 div {
   font-size: 16px;
+}
+input.van-field__control {
+  padding-left: 10px;
 }
 .box-loading {
   overflow: hidden;
@@ -55,9 +57,12 @@ div {
 .mu-text-field-textarea {
   line-height: 1.2;
 }
-.van-cell__value {
-  padding-left: 10px;
-}
+// .van-cell__value {
+// padding-left: 5px;
+// }
+// input.van-field__control {
+//   padding-left: 0 !important;
+// }
 div:not(.no-disabled_bgcolor) > div > div > input.van-field__control[disabled] {
   color: #333 !important;
   font-size: 0.38rem;
@@ -65,14 +70,15 @@ div:not(.no-disabled_bgcolor) > div > div > input.van-field__control[disabled] {
   background: #e0e0e0;
   padding-left: 10px;
 }
+.van-field__label {
+  color: #333 !important;
+}
 .van-hairline--top-bottom:first-child::after {
   border-top: none;
 }
 .van-field__control:disabled {
   color: #333;
-}
-input.van-field__control {
-  padding-left: 10px;
+  -webkit-text-fill-color: #333;
 }
 .van-field__body select {
   color: #333 !important;
@@ -329,6 +335,10 @@ h3.header-title {
 }
 .app-moto-icon {
   background: url('../img/app-icon/moto.png') no-repeat center;
+  background-size: cover;
+}
+.app-weed-icon {
+  background: url('../img/app-icon/weed.png') no-repeat center;
   background-size: cover;
 }
 .app-interview-icon {

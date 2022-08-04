@@ -14,7 +14,7 @@
         </van-col>
         <van-col span="16" class="label-content">
           <div>
-            <label>{{approve.userName}}({{approve.position}})</label>
+            <label>{{ approve.UserName }}({{ approve.Position }})</label>
           </div>
         </van-col>
       </van-row>
@@ -24,7 +24,7 @@
         </van-col>
         <van-col span="16" class="label-content">
           <div>
-            <label>{{approve.orgName}}</label>
+            <label>{{ approve.OrgName }}</label>
           </div>
         </van-col>
       </van-row>
@@ -34,7 +34,7 @@
         </van-col>
         <van-col span="16" class="label-content">
           <div>
-            <label>{{approve.patrolName}}</label>
+            <label>{{ approve.PatrolName }}</label>
           </div>
         </van-col>
       </van-row>
@@ -44,7 +44,7 @@
         </van-col>
         <van-col span="16" class="label-content">
           <div>
-            <label>{{approve.address}}</label>
+            <label>{{ approve.Address }}</label>
           </div>
         </van-col>
       </van-row>
@@ -54,7 +54,7 @@
         </van-col>
         <van-col span="16" class="label-content">
           <div>
-            <label>{{approve.dtDate}}</label>
+            <label>{{ approve.dtDate }}</label>
           </div>
         </van-col>
       </van-row>
@@ -64,7 +64,7 @@
         </van-col>
         <van-col span="16" class="label-content">
           <div>
-            <label>{{approve.locateTime}}</label>
+            <label>{{ approve.LocateTime }}</label>
           </div>
         </van-col>
       </van-row>
@@ -74,8 +74,16 @@
         </van-col>
         <van-col span="16" class="label-content">
           <div>
-            <label>{{approve.reason}}</label>
+            <label>{{ approve.Reason }}</label>
           </div>
+        </van-col>
+      </van-row>
+      <van-row class="info-row">
+        <van-col span="8" class="label-header">
+          <span>备注</span>
+        </van-col>
+        <van-col span="16" class="label-content" id="remark-row_edit">
+          <van-field v-model="approve['备注']" type="textarea" rows="1" autosize placeholder="请输入原因" />
         </van-col>
       </van-row>
     </div>
@@ -96,5 +104,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+#remark-row_edit {
+  & > div div {
+    padding: 0 !important;
+    textarea {
+      padding: 0;
+    }
+  }
+}
 </style>

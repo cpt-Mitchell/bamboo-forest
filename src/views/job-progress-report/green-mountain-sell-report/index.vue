@@ -1,8 +1,9 @@
+<!-- 采伐作业进度汇报 -->
 <template>
-  <div>
-    <div style="padding: 0 10px">
+  <div class="logging-progress-report-box">
+    <div style="padding:0 10px;">
       <van-cell-group>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>林场名称</span>
           </div>
@@ -15,15 +16,15 @@
                 v-model="form.forestName"
                 @change="selectChangeHandle('forestName', 'forestries', 'areas')"
               >
-                <option value selected>请选择林场</option>
-                <option v-for="(option, index) in forestries" :key="index" :value="option.lcName">
-                  {{ option.lcName }}
-                </option>
+                <option :value="null" selected>请选择林场</option>
+                <option v-for="(option, index) in forestries" :key="index" :value="option.lcName">{{
+                  option.lcName
+                }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>片区名称</span>
           </div>
@@ -36,15 +37,15 @@
                 v-model="form.areaName"
                 @change="selectChangeHandle('areaName', 'areas', 'forestClasses')"
               >
-                <option value selected>请选择片区</option>
-                <option v-for="(option, index) in areas" :key="index" :value="option.pqName">
-                  {{ option.pqName }}
-                </option>
+                <option :value="null" selected>请选择片区</option>
+                <option v-for="(option, index) in areas" :key="index" :value="option.pqName">{{
+                  option.pqName
+                }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>林班名称</span>
           </div>
@@ -57,15 +58,15 @@
                 v-model="form.compartment"
                 @change="selectChangeHandle('compartment', 'forestClasses', 'orderNumbers')"
               >
-                <option value selected>请选择林班</option>
-                <option v-for="(option, index) in forestClasses" :key="index" :value="option.lbName">
-                  {{ option.lbName }}
-                </option>
+                <option :value="null" selected>请选择林班</option>
+                <option v-for="(option, index) in forestClasses" :key="index" :value="option.lbName">{{
+                  option.lbName
+                }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>订单编号</span>
           </div>
@@ -78,15 +79,15 @@
                 v-model="form.orderNo"
                 @change="selectChangeHandle('orderNo', 'orderNumbers', 'workProdures')"
               >
-                <option value selected>请选择订单编号</option>
-                <option v-for="(option, index) in orderNumbers" :key="index" :value="option.orderNo">
-                  {{ option.orderNo }}
-                </option>
+                <option :value="null" selected>请选择订单编号</option>
+                <option v-for="(option, index) in orderNumbers" :key="index" :value="option.orderNo">{{
+                  option.orderNo
+                }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>作业工序</span>
           </div>
@@ -99,27 +100,61 @@
                 v-model="form.workPactProcedureId"
                 @change="formSetProdurceValue"
               >
-                <option value="" selected>请选择作业工序</option>
-                <option v-for="(option, index) in workProdures" :key="index" :value="option.workPactProcedureId">
-                  {{ option.procedureName }}
-                </option>
+                <option :value="null" selected>请选择作业工序</option>
+                <option v-for="(option, index) in workProdures" :key="index" :value="option.workPactProcedureId">{{
+                  option.procedureName
+                }}</option>
               </select>
+            </div>
+          </div>
+        </div>
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
+          <div class="van-cell__title">
+            <span>累计采伐面积</span>
+          </div>
+          <div class="van-cell__value">
+            <div class="van-field__body">
+              <div style="padding: 0 10px;color:#333;">{{ form.totalCutArea || 0 }}亩</div>
             </div>
           </div>
         </div>
         <van-field
           class="no-disabled_bgcolor"
-          v-model="form.startDate"
-          @click.native="datePickerShow('startDate')"
-          label="开工日期"
-          placeholder="点击选择日期"
-          disabled
-        />
+          v-model="form.addCutArea"
+          label="新增采伐面积"
+          type="number"
+          placeholder="请输入新增采伐面积"
+        >
+          <template #button>
+            <div style="width:40px;text-align:center;">亩</div>
+          </template>
+        </van-field>
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
+          <div class="van-cell__title">
+            <span>累计拉运面积</span>
+          </div>
+          <div class="van-cell__value">
+            <div class="van-field__body">
+              <div style="padding: 0 10px;color:#333;">{{ form.totalTransArea || 0 }}亩</div>
+            </div>
+          </div>
+        </div>
         <van-field
           class="no-disabled_bgcolor"
-          v-model="form.endDate"
-          @click.native="datePickerShow('endDate')"
-          label="完工日期"
+          v-model="form.addTransArea"
+          label="新增拉运面积"
+          type="number"
+          placeholder="请输入新增拉运面积"
+        >
+          <template #button>
+            <div style="width:40px;text-align:center;">亩</div>
+          </template>
+        </van-field>
+        <van-field
+          class="no-disabled_bgcolor"
+          v-model="form.reportTime"
+          @click.native="datePickerShow('reportTime')"
+          label="汇报日期"
           placeholder="点击选择日期"
           disabled
         />
@@ -128,7 +163,7 @@
     <date-picker :show="showDatePicker" type="date" @result="getDateResult" @close="datePickerClose" />
     <footbar>
       <van-col span="24">
-        <van-button @click="doSubmit()" style="width: 100%; height: 40px" type="primary">提交</van-button>
+        <van-button @click="doSubmit()" style="width:100%;height:40px;" type="primary">提交</van-button>
       </van-col>
     </footbar>
   </div>
@@ -148,15 +183,18 @@ export default {
       forestClasses: [],
       orderNumbers: [],
       workProdures: [],
-      key: '',
       form: {
-        workPactProcedureId: '',
-        forestName: '',
-        areaName: '',
-        compartment: '',
-        orderNo: '',
-        procedureName: '',
-        projectName: ''
+        workPactProcedureId: null,
+        forestName: null,
+        areaName: null,
+        compartment: null,
+        orderNo: null,
+        procedureName: null,
+        totalTransArea: null,
+        addTransArea: null,
+        totalCutArea: null,
+        addCutArea: null,
+        reportTime: null
       },
       showDatePicker: false
     }
@@ -166,34 +204,40 @@ export default {
       let produreItem = this.workProdures.find(item => item.workPactProcedureId === this.form.workPactProcedureId)
       if (produreItem) {
         // this.form.procedureName = produreItem.procedureName
-        this.form = Object.assign(this.form, produreItem)
+        // this.form = Object.assign(this.form, produreItem)
+        let params = Object.assign(this.form, produreItem)
+        request.post(API.FOREST_JOB_SELL_APPLY_SELECT_ITEMS, params).then(res => {
+          this.$loadingState(false)
+          let errorCode = res.data.code
+          if (errorCode === 1000) {
+            let data = res.data.data || []
+            if (data && data.length !== 0) {
+              let { totalCutArea, totalTransArea } = data[0] || {}
+              this.form = Object.assign(this.form, { totalCutArea, totalTransArea })
+            }
+          }
+        })
       }
     },
     datePickerClose() {
       this.showDatePicker = false
     },
     datePickerShow(key) {
-      this.key = key
       this.showDatePicker = true
     },
     getDateResult(val) {
-      this.form[this.key] = parseTime(val, '{y}-{m}-{d}')
-      if (this.form.startDate && this.form.endDate) {
-        if (new Date(this.form.startDate).getTime() > new Date(this.form.endDate).getTime()) {
-          dAlert('完工日期不能早于开工日期！请重新选择')
-          this.form[this.key] = ''
-        }
-      }
       this.showDatePicker = false
+      this.form.reportTime = parseTime(val, '{y}-{m}-{d}')
     },
     resetForm(index) {
       let formItemNames = ['areaName', 'compartment', 'orderNo', 'procedureName']
       formItemNames.splice(0, index)
       let obj = {}
       formItemNames.forEach(item => {
-        obj[item] = ''
+        obj[item] = null
       })
       this.form = Object.assign({}, this.form, obj)
+      console.log(this.form)
     },
     resetDataArr(index) {
       let arr = ['areas', 'forestClasses', 'orderNumbers', 'workProdures']
@@ -235,27 +279,24 @@ export default {
     },
     querySelector(params, nextArrKey) {
       this.$loadingState(true, '数据查询中')
-      request
-        .post(API.FOREST_JOB_APPLY_OVER_QUERY_SELECT_ITEMS, params)
-        .then(res => {
-          this.$loadingState(false)
-          let errorCode = res.data.code
-          if (errorCode === 1000) {
-            this[nextArrKey] = res.data.data || []
-          }
-        })
-        .catch(err => this.$loadingState(false))
+      request.post(API.FOREST_JOB_SELL_APPLY_SELECT_ITEMS, params).then(res => {
+        this.$loadingState(false)
+        let errorCode = res.data.code
+        if (errorCode === 1000) {
+          this[nextArrKey] = res.data.data || []
+        }
+      })
     },
     doSubmit() {
       this.$dConfirm('确定提交表单内容吗？', () => {
         this.$loadingState(true, '数据提交中')
         request
-          .post(API.FOREST_JOB_APPLY_OVER_SAVE, this.form)
-          .then(resp => {
+          .post(API.FOREST_JOB_SELL_HILL_SAVE, this.form)
+          .then(res => {
             this.$loadingState(false)
             let errorCode = res.data.code
-            dAlert(resp.data.msg, () => {
-              if (errorCode === '1000') {
+            dAlert(res.data.msg, () => {
+              if (errorCode + '' === '1000') {
                 this.$router.back()
               }
             })
@@ -270,7 +311,7 @@ export default {
   },
   mounted() {
     this.querySelector({}, 'forestries')
-    this.$title('作业完工汇报')
+    this.$title('采伐作业进度汇报')
   }
 }
 </script>
@@ -278,5 +319,9 @@ export default {
 <style scoped lang="less">
 .van-field .van-cell__title {
   max-width: 110px;
+  font-size: 16px;
+  input[type='number'] {
+    font-size: 0.32rem;
+  }
 }
 </style>

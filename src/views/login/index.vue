@@ -109,7 +109,7 @@ export default {
   }
   .van-checkbox__icon,
   .van-checkbox__label {
-    line-height: 0.32rem !important;
+    line-height: 0.4rem !important;
   }
   .van-checkbox__icon .van-icon {
     font-size: 0.36rem !important;

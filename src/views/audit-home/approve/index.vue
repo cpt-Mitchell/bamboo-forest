@@ -83,10 +83,10 @@ export default {
           detail = API.DINGTALK_APPROVE_NIGHT_DETAIL
           submit = API.DINGTALK_APPROVE_NIGHT_VERIFY
           break
-        case '巡山异常报到':
-          detail = API.DINGTALK_APPROVE_PATROL_DETAIL
-          submit = API.DINGTALK_APPROVE_PATROL_VERIFY
-          break
+        // case '巡山异常报到':
+        //   detail = API.DINGTALK_APPROVE_PATROL_DETAIL
+        //   submit = API.DINGTALK_APPROVE_PATROL_VERIFY
+        //   break
         case '协管记录':
           detail = API.DINGTALK_APPROVE_MANAGE_DETAIL
           submit = API.DINGTALK_APPROVE_MANAGE_VERIFY
@@ -103,21 +103,27 @@ export default {
     details() {
       let that = this
       this.$loadingState(true, '数据加载中')
-      if (this.formName !== '林班工作时间明细') {
+      if (this.formName === '巡山异常报到') {
+        let params = {
+          formid: this.$route.params.id || '',
+          apvResult: '同意',
+          module: '竹林巡山异常报到',
+          task: '查询巡山异常详情',
+          payload: {}
+        }
         request
-          .get(this.detail_api_url + this.$route.params.id)
-          .then(resp => {
+          .post(API.APP_COMMON_TRANSACTION_SUBMIT, params)
+          .then(res => {
             this.$loadingState(false)
-            let errCode = resp.data.errorCode
-            let data = resp.data.data || {}
-            if (errCode) {
-              that.approve = data
-            } else {
-              dAlert(resp.data.msg)
+            let data = res.data || {}
+            if (data.errorCode !== 0) {
+              this.$dAlert(data.msg || '')
+              return false
             }
+            that.approve = data.data.detail || {}
           })
-          .catch(errr => this.$loadingState(false))
-      } else {
+          .catch(err => this.$loadingState(false))
+      } else if (this.formName === '林班工作时间明细') {
         let params = {
           formid: this.$route.params.id || '',
           apvResult: '同意',
@@ -137,6 +143,20 @@ export default {
             that.approve = data.data.data || {}
           })
           .catch(err => this.$loadingState(false))
+      } else {
+        request
+          .get(this.detail_api_url + this.$route.params.id)
+          .then(resp => {
+            this.$loadingState(false)
+            let errCode = resp.data.errorCode
+            let data = resp.data.data || {}
+            if (errCode) {
+              that.approve = data
+            } else {
+              dAlert(resp.data.msg)
+            }
+          })
+          .catch(errr => this.$loadingState(false))
       }
     },
     submit(apvResult) {
@@ -150,28 +170,38 @@ export default {
         result = '不同意'
       }
       this.$dConfirm(msg || '确认提交吗？', data => {
-        let params = {
-          rowId: this.$route.params.id,
-          result: result,
-          type: '申请'
-        }
         this.$loadingState(true, '数据提交中')
-        if (this.formName !== '林班工作时间明细') {
+        if (this.formName === '巡山异常报到') {
+          // if (!this.approve['备注']) {
+          //   this.$dAlert('请填写备注')
+          //   return false
+          // }
+          let params = {
+            formid: this.$route.params.id || '',
+            apvResult: result || '',
+            module: '竹林巡山异常报到',
+            task: '巡山异常审核',
+            payload: {
+              result: result,
+              rowId: this.$route.params.id || '',
+              remark: this.approve['备注']
+            }
+          }
           request
-            .post(this.submit_api_url, params)
-            .then(resp => {
+            .post(API.APP_COMMON_TRANSACTION_SUBMIT, params)
+            .then(res => {
               this.$loadingState(false)
-              let errCode = resp.data.errorCode
-              this.$dAlert(resp.data.msg, () => {
-                if (errCode) {
+              let data = res.data || {}
+              this.$dAlert(data.msg, () => {
+                if (data.errorCode === 0) {
                   this.$router.push({
                     name: '审核审批首页'
                   })
                 }
               })
             })
-            .catch(errr => this.$loadingState(false))
-        } else {
+            .catch(err => this.$loadingState(false))
+        } else if (this.formName === '林班工作时间明细') {
           let params = {
             formid: this.$route.params.id || '',
             apvResult: result || '',
@@ -193,6 +223,26 @@ export default {
               })
             })
             .catch(err => this.$loadingState(false))
+        } else {
+          let params = {
+            rowId: this.$route.params.id,
+            result: result,
+            type: '申请'
+          }
+          request
+            .post(this.submit_api_url, params)
+            .then(resp => {
+              this.$loadingState(false)
+              let errCode = resp.data.errorCode
+              this.$dAlert(resp.data.msg, () => {
+                if (errCode) {
+                  this.$router.push({
+                    name: '审核审批首页'
+                  })
+                }
+              })
+            })
+            .catch(errr => this.$loadingState(false))
         }
       })
     }

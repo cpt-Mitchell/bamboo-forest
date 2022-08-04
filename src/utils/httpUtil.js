@@ -6,7 +6,8 @@ import router from '@/router'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
 const fetch = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API || '',
+  // baseURL: 'https://wxmp.hwagain.com/api/' || process.env.VUE_APP_BASE_API || '',
+  baseURL: /* '/apitest' || */ process.env.VUE_APP_BASE_API || '',
   timeOut: 5000
   // onUploadProgress: p=> {
   //     console.log(p)
@@ -38,6 +39,10 @@ fetch.interceptors.response.use(
     return res
   },
   error => {
+    store.commit('loadingState', {
+      isLoading: false,
+      loadingText: ''
+    })
     if (error.response) {
       let errMsg = ''
       switch (error.response.status) {
@@ -65,7 +70,7 @@ fetch.interceptors.response.use(
         dAlert(errMsg || error.response.message || '接口异常:' + error.response.status)
       }
     } else {
-      // dAlert('接口访问异常')
+      dAlert(error.message || error.msg)
     }
     return Promise.reject(error.response)
   }

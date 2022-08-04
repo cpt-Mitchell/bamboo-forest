@@ -503,6 +503,17 @@ export default new Router({
                 )
             },
             {
+              path: 'logging-complete',
+              name: '采伐完工',
+              meta: {
+                pRouteName: '作业进度汇报首页'
+              },
+              component: () =>
+                import(
+                  /* webpackChunkName: "job-progress-report-logging-complete" */ '@/views/job-progress-report/logging-complete'
+                )
+            },
+            {
               path: 'complete',
               name: '作业完工',
               meta: {
@@ -591,6 +602,17 @@ export default new Router({
                     )
                 }
               ]
+            },
+            {
+              path: 'greenmountainsell',
+              name: '卖青山作业进度汇报',
+              meta: {
+                pRouteName: '作业进度汇报首页'
+              },
+              component: () =>
+                import(
+                  /* webpackChunkName: "green-mountain-sell-report" */ '@/views/job-progress-report/green-mountain-sell-report'
+                )
             },
             {
               path: 'progressreportor',
@@ -960,6 +982,132 @@ export default new Router({
                 pRouteName: '定点列表'
               },
               component: () => import(/* webpackChunkName: "location-details" */ '@/views/location/details')
+            }
+          ]
+        },
+        {
+          path: '/check-weeding-price',
+          name: '除草核价计划',
+          meta: {
+            pRouteName: '竹林应用',
+            background: 'location'
+          },
+          component: () => import(/* webpackChunkName: "check-weeding-price" */ '@/views/check-weeding-price/form')
+        },
+        {
+          path: '/chemicals-demand',
+          name: '药品需求',
+          meta: {
+            pRouteName: '竹林应用',
+            background: 'interview'
+          },
+          component: () => import('@/views/chemicals-demand/index')
+        },
+        {
+          path: '/insect-pest',
+          name: '林木灾害汇报',
+          meta: {
+            background: 'weed',
+            pRouteName: '竹林应用'
+          },
+          component: () => import('@/views/insect-pest/index'),
+          redirect: '/insect-pest/apps',
+          children: [
+            {
+              path: 'apps',
+              name: '林木灾害汇报应用',
+              meta: {
+                pRouteName: '竹林应用'
+              },
+              hidden: true,
+              component: () => import(/* webpackChunkName: "insect-pest-apps" */ '@/views/insect-pest/apps')
+            },
+            {
+              path: 'pest-report',
+              name: '汇报界面',
+              meta: {
+                pRouteName: '林木灾害汇报应用',
+                background: '#ff6500'
+              },
+              component: () => import(/* webpackChunkName: "insect-pest-report" */ '@/views/insect-pest/detail')
+            },
+            {
+              path: 'pest-staged',
+              name: '未汇报暂存',
+              // hidden: true,
+              meta: {
+                pRouteName: '林木灾害汇报应用',
+                background: '#ff6500'
+              },
+              component: () => import(/* webpackChunkName: "insect-pest-list" */ '@/views/insect-pest/noReport')
+            },
+            {
+              path: 'pest-staged/detailed',
+              name: '未汇报暂存【详情】',
+              hidden: true,
+              meta: {
+                pRouteName: '未汇报暂存'
+              },
+              component: () => import(/* webpackChunkName: "insect-pest-noReport" */ '@/views/insect-pest/noReport/detail')
+            },
+            {
+              path: 'pest-query',
+              name: '已汇报查询',
+              // hidden: true,
+              meta: {
+                pRouteName: '林木灾害汇报应用',
+                background: '#ff6500'
+              },
+              component: () => import(/* webpackChunkName: "insect-pest-list" */ '@/views/insect-pest/report')
+            },
+            {
+              path: 'pest-query/detailed',
+              name: '已汇报查询【详情】',
+              hidden: true,
+              meta: {
+                pRouteName: '已汇报查询'
+              },
+              component: () => import(/* webpackChunkName: "insect-pest-report" */ '@/views/insect-pest/report/detail')
+            }
+          ]
+        },
+        {
+          path: '/weeding',
+          name: '除草核价记录',
+          meta: {
+            background: 'weed',
+            pRouteName: '竹林应用'
+          },
+          component: () => import('@/views/weeding/index'),
+          redirect: '/weeding/apps',
+          children: [
+            {
+              path: 'apps',
+              name: '除草核价记录',
+              meta: {
+                pRouteName: '竹林应用'
+              },
+              hidden: true,
+              component: () => import(/* webpackChunkName: "weeding-apps" */ '@/views/weeding/apps')
+            },
+            {
+              path: 'launch',
+              name: '除草核价记录发起',
+              meta: {
+                pRouteName: '除草核价记录',
+                background: '#ff6500',
+                iconTitle: '记录发起'
+              },
+              component: () => import(/* webpackChunkName: "weeding-launch" */ '@/views/weeding/launch')
+            },
+            {
+              path: 'review',
+              name: '除草核价记录审核',
+              meta: {
+                pRouteName: '审核审批首页'
+              },
+              hidden: true,
+              component: () => import(/* webpackChunkName: "weeding-review" */ '@/views/weeding/review')
             }
           ]
         },

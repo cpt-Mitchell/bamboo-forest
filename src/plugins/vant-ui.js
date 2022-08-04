@@ -19,6 +19,7 @@ import {
   List,
   Panel,
   Image,
+  Cascader,
   Toast,
   NavBar,
   DatetimePicker,
@@ -54,6 +55,7 @@ export default class VantUI {
       .use(List)
       .use(Panel)
       .use(Toast)
+      .use(Cascader)
       .use(NavBar)
       .use(DatetimePicker)
       .use(ActionSheet)

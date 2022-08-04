@@ -41,6 +41,7 @@ export default {
       if (['/', '/apps'].indexOf(this.$route.path) !== -1) {
         return false
       }
+      console.log(this.$route.path, this.$route.meta.pRouteName)
       if (!this.back) {
         if (this.$route.meta.pRouteName) {
           this.$router.push({ name: this.$route.meta.pRouteName })
@@ -48,7 +49,7 @@ export default {
           this.$router.back()
         }
       } else {
-        this.back()
+        this.$router.back()
       }
     },
     onClickRight() {

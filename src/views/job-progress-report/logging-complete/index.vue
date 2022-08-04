@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div style="padding: 0 10px">
+  <div class="logging-complete-container">
+    <div style="padding:0 10px;">
       <van-cell-group>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>林场名称</span>
           </div>
@@ -16,14 +16,14 @@
                 @change="selectChangeHandle('forestName', 'forestries', 'areas')"
               >
                 <option value selected>请选择林场</option>
-                <option v-for="(option, index) in forestries" :key="index" :value="option.lcName">
-                  {{ option.lcName }}
-                </option>
+                <option v-for="(option, index) in forestries" :key="index" :value="option.lcName">{{
+                  option.lcName
+                }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>片区名称</span>
           </div>
@@ -37,14 +37,14 @@
                 @change="selectChangeHandle('areaName', 'areas', 'forestClasses')"
               >
                 <option value selected>请选择片区</option>
-                <option v-for="(option, index) in areas" :key="index" :value="option.pqName">
-                  {{ option.pqName }}
-                </option>
+                <option v-for="(option, index) in areas" :key="index" :value="option.pqName">{{
+                  option.pqName
+                }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>林班名称</span>
           </div>
@@ -58,14 +58,14 @@
                 @change="selectChangeHandle('compartment', 'forestClasses', 'orderNumbers')"
               >
                 <option value selected>请选择林班</option>
-                <option v-for="(option, index) in forestClasses" :key="index" :value="option.lbName">
-                  {{ option.lbName }}
-                </option>
+                <option v-for="(option, index) in forestClasses" :key="index" :value="option.lbName">{{
+                  option.lbName
+                }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>订单编号</span>
           </div>
@@ -79,14 +79,14 @@
                 @change="selectChangeHandle('orderNo', 'orderNumbers', 'workProdures')"
               >
                 <option value selected>请选择订单编号</option>
-                <option v-for="(option, index) in orderNumbers" :key="index" :value="option.orderNo">
-                  {{ option.orderNo }}
-                </option>
+                <option v-for="(option, index) in orderNumbers" :key="index" :value="option.orderNo">{{
+                  option.orderNo
+                }}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="van-cell van-field" style="color: rgb(51, 51, 51)">
+        <div class="van-cell van-field" style="color: rgb(51, 51, 51);">
           <div class="van-cell__title">
             <span>作业工序</span>
           </div>
@@ -100,26 +100,18 @@
                 @change="formSetProdurceValue"
               >
                 <option value="" selected>请选择作业工序</option>
-                <option v-for="(option, index) in workProdures" :key="index" :value="option.workPactProcedureId">
-                  {{ option.procedureName }}
-                </option>
+                <option v-for="(option, index) in workProdures" :key="index" :value="option.workPactProcedureId">{{
+                  option.procedureName
+                }}</option>
               </select>
             </div>
           </div>
         </div>
         <van-field
           class="no-disabled_bgcolor"
-          v-model="form.startDate"
-          @click.native="datePickerShow('startDate')"
-          label="开工日期"
-          placeholder="点击选择日期"
-          disabled
-        />
-        <van-field
-          class="no-disabled_bgcolor"
-          v-model="form.endDate"
-          @click.native="datePickerShow('endDate')"
-          label="完工日期"
+          v-model="form.cutEndDate"
+          @click.native="datePickerShow('cutEndDate')"
+          label="采伐完工日期"
           placeholder="点击选择日期"
           disabled
         />
@@ -128,7 +120,7 @@
     <date-picker :show="showDatePicker" type="date" @result="getDateResult" @close="datePickerClose" />
     <footbar>
       <van-col span="24">
-        <van-button @click="doSubmit()" style="width: 100%; height: 40px" type="primary">提交</van-button>
+        <van-button @click="doSubmit()" style="width:100%;height:40px;" type="primary">提交</van-button>
       </van-col>
     </footbar>
   </div>
@@ -148,7 +140,6 @@ export default {
       forestClasses: [],
       orderNumbers: [],
       workProdures: [],
-      key: '',
       form: {
         workPactProcedureId: '',
         forestName: '',
@@ -173,18 +164,11 @@ export default {
       this.showDatePicker = false
     },
     datePickerShow(key) {
-      this.key = key
       this.showDatePicker = true
     },
     getDateResult(val) {
-      this.form[this.key] = parseTime(val, '{y}-{m}-{d}')
-      if (this.form.startDate && this.form.endDate) {
-        if (new Date(this.form.startDate).getTime() > new Date(this.form.endDate).getTime()) {
-          dAlert('完工日期不能早于开工日期！请重新选择')
-          this.form[this.key] = ''
-        }
-      }
       this.showDatePicker = false
+      this.form.cutEndDate = parseTime(val, '{y}-{m}-{d}')
     },
     resetForm(index) {
       let formItemNames = ['areaName', 'compartment', 'orderNo', 'procedureName']
@@ -236,7 +220,7 @@ export default {
     querySelector(params, nextArrKey) {
       this.$loadingState(true, '数据查询中')
       request
-        .post(API.FOREST_JOB_APPLY_OVER_QUERY_SELECT_ITEMS, params)
+        .post(API.FOREST_JOB_APPLY_CUT_OVER_QUERY_SELECT_ITEMS, params)
         .then(res => {
           this.$loadingState(false)
           let errorCode = res.data.code
@@ -250,11 +234,11 @@ export default {
       this.$dConfirm('确定提交表单内容吗？', () => {
         this.$loadingState(true, '数据提交中')
         request
-          .post(API.FOREST_JOB_APPLY_OVER_SAVE, this.form)
-          .then(resp => {
+          .post(API.FOREST_JOB_APPLY_CUT_OVER_SAVE, this.form)
+          .then(res => {
             this.$loadingState(false)
             let errorCode = res.data.code
-            dAlert(resp.data.msg, () => {
+            this.$dAlert(res.data.msg, () => {
               if (errorCode === '1000') {
                 this.$router.back()
               }
@@ -275,8 +259,13 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-.van-field .van-cell__title {
-  max-width: 110px;
+<style lang="less">
+.logging-complete-container {
+  .van-field .van-cell__title {
+    max-width: 110px;
+  }
+  .van-field__body input {
+    margin-left: 10px;
+  }
 }
 </style>

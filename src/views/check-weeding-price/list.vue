@@ -24,7 +24,9 @@
     </van-row>
     <footbar>
       <van-col span="24">
-        <van-button @click="addWorkRecord()" style="width:100%;height:40px;" type="primary">新增巡山到达</van-button>
+        <van-button @click="$router.push('/check-weeding-price/form')" style="width:100%;height:40px;" type="primary"
+          >新增除草核价</van-button
+        >
       </van-col>
     </footbar>
   </div>

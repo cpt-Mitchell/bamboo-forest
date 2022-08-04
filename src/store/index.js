@@ -22,7 +22,10 @@ export default new Vuex.Store({
     devAlertShow: false,
     isLoading: false,
     loadingText: '',
-    locateTimout: null
+    locateTimout: null,
+    launchForm: null,
+    launchData: null,
+    inputShow: false
   },
   actions: {
     doLogin({ commit }, payload) {
@@ -70,6 +73,15 @@ export default new Vuex.Store({
           window.localStorage.removeItem('appLoginUser')
         }
       }
+    },
+    SAVE_WEEDING_LAUNCH_DATA: (state, list) => {
+      state.launchData = list || null
+    },
+    SAVE_WEEDING_LAUNCH_FORM: (state, object) => {
+      state.launchForm = object || null
+    },
+    INPUT_SHOW: (state, data) => {
+      state.inputShow = data
     }
   }
 })

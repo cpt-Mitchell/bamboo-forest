@@ -18,7 +18,7 @@ store.commit('loadingState', { isLoading: false })
 //     store.commit('updateDeviceUuid', device.uuid)
 //     if (devicePlatform === 'Android') {
 //       request
-//         .get('http://wxmp.hwagain.com:60008/hwagain/zhulinapk/version.json?t=' + new Date().getTime())
+//         .get('https://www.hwagain.cn/hwagain/zhulinapk/version.json?t=' + new Date().getTime())
 //         // .get('http://wxmp.hwagain.com:60008/hwagain/zhulinapk/version_test.json?t=' + new Date().getTime())
 //         .then(data => {
 //           cordova.getAppVersion
